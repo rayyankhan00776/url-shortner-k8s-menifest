@@ -1,0 +1,23 @@
+{
+  "name": "url-shortner-k8s",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Muhammad Rayyan",
+  "license": "ISC",
+  "description": "This is an basic app of url shortner, which is used to shorten the url and redirect to the original url when accessed along with the implementation of k8s menifest and dockerization.",
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "mongoose": "^9.7.1",
+    "shortid": "^2.2.17"
+  }
+}

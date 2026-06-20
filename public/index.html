@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+/>
+<title>URL Shortener</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+
+body{
+  background:#f5f5f5;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+.container{
+  background:#fff;
+  padding:30px;
+  border-radius:12px;
+  width:100%;
+  max-width:500px;
+  box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+h1{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.input-group{
+  display:flex;
+  gap:10px;
+}
+
+input{
+  flex:1;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:8px;
+}
+
+button{
+  padding:12px 20px;
+  border:none;
+  background:#007bff;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#0056b3;
+}
+
+.result{
+  margin-top:20px;
+  text-align:center;
+}
+
+.result a{
+  color:#007bff;
+  text-decoration:none;
+  word-break:break-all;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+  <h1>URL Shortener</h1>
+
+  <div class="input-group">
+    <input
+      type="url"
+      id="urlInput"
+      placeholder="https://example.com"
+    />
+    <button onclick="shortenUrl()">
+      Shorten
+    </button>
+  </div>
+
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+async function shortenUrl() {
+  const url = document.getElementById("urlInput").value;
+
+  if (!url) {
+    alert("Please enter a URL");
+    return;
+  }
+
+  const response = await fetch("/shorten", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      originalUrl: url,
+    }),
+  });
+
+  const data = await response.json();
+
+  const result = document.getElementById("result");
+
+  if (data.success) {
+    result.innerHTML = `
+      <p><strong>Short URL:</strong></p>
+      <a href="${data.shortUrl}" target="_blank">
+        ${data.shortUrl}
+      </a>
+    `;
+  } else {
+    result.innerHTML =
+      "<p>Something went wrong.</p>";
+  }
+}
+</script>
+
+</body>
+</html>
