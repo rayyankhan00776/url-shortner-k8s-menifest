@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-app
+  namespace: us8-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-app
+  template:
+    metadata:
+      labels:
+        app: node-app
+    spec:
+      containers:
+      - name: node
+        image: rayyan12311/url-shortener-k8s:latest
+        imagePullPolicy: IfNotPresent
+
+        envFrom:
+        - configMapRef:
+            name: node-config
+
+        ports:
+        - containerPort: 4001
+
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
